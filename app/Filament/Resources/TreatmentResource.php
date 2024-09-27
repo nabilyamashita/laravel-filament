@@ -17,7 +17,28 @@ class TreatmentResource extends Resource
 {
     protected static ?string $model = Treatment::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-wrench';
+
+    protected static ?string $modelLabel = 'Perawatan';
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        if (auth()->user()->can('perawatans')) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    public static function canViewAny(): bool
+    {
+        if (auth()->user()->can('perawatans')) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public static function form(Form $form): Form
     {
@@ -32,6 +53,9 @@ class TreatmentResource extends Resource
                 ->columnSpan('full'),
                 Forms\Components\Select::make('patient_id')
                 ->relationship('patient', 'name')
+                ->required(),
+                Forms\Components\Select::make('doctor_id')
+                ->relationship('doctor', 'name')
                 ->required(),
                 Forms\Components\TextInput::make('price')
                 ->numeric()
@@ -79,4 +103,5 @@ class TreatmentResource extends Resource
             'edit' => Pages\EditTreatment::route('/{record}/edit'),
         ];
     }
+
 }

@@ -21,6 +21,9 @@ class TreatmentsRelationManager extends RelationManager
                 Forms\Components\TextInput::make('description')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\Select::make('doctor_id')
+                    ->relationship('doctor', 'name')
+                    ->required(),
             ]);
     }
 
@@ -30,6 +33,7 @@ class TreatmentsRelationManager extends RelationManager
             ->recordTitleAttribute('description')
             ->columns([
                 Tables\Columns\TextColumn::make('description'),
+                Tables\Columns\TextColumn::make('doctor_id'),
             ])
             ->filters([
                 //

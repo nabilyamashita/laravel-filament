@@ -21,5 +21,9 @@ class Treatment extends Model
         'price' => MoneyCast::class,
     ];
 
+    public function doctor(): BelongsTo
+    {
+        return $this->belongsTo(Doctor::class);
+    }
 
 }
